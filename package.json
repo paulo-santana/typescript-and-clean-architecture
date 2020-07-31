@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "Paulo Santana <paulo.santana.r@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest --no-cache --watchAll"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.8",
     "@types/node": "^14.0.27",

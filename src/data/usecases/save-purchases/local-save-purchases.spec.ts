@@ -23,6 +23,10 @@ class CacheStoreSpy implements CacheStore {
   simulateDeleteError() : void {
     jest.spyOn(CacheStoreSpy.prototype, 'delete').mockImplementationOnce(() => { throw new Error() })
   }
+
+  simulateInsertError() {
+    jest.spyOn(CacheStoreSpy.prototype, 'insert').mockImplementationOnce(() => { throw new Error() })
+  }
 }
 
 const mockPurchases = (): Array<SavePurchases.Params> => [{
@@ -82,6 +86,14 @@ describe('LocalSavePurchases', () => {
     expect(cacheStore.deleteCallsCount).toBe(1);
     expect(cacheStore.insertKey).toBe('purchases');
     expect(cacheStore.insertValues).toEqual(purchases);
+  });
+
+  test('Should throw if insert throws', () => {
+    const { sut, cacheStore } = makeSut();
+    cacheStore.simulateInsertError();
+    const purchases = mockPurchases();
+    const promise = sut.save(purchases);
+    expect(promise).rejects.toThrow();
   });
 
 })

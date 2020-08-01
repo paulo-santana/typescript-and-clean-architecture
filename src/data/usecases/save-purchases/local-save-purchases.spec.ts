@@ -63,7 +63,7 @@ describe('LocalSavePurchases', () => {
     expect(cacheStore.deleteKey).toBe('purchases');
   });
 
-  test('Should not insert new cache save', () => {
+  test('Should not insert new Cache if delete fails', () => {
     const { sut, cacheStore } = makeSut();
     cacheStore.simulateDeleteError();
     const purchases = mockPurchases();
